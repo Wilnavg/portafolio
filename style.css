@@ -69,4 +69,87 @@ footer {
         padding: 20px;
     }
 
+    #listaProyectos {
+        grid-template-columns: 1fr;
+    }
+
+
+
+    #saludoBtn {
+    background-color: #2563eb;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
 }
+
+#saludoBtn:hover {
+    background-color: #1d4ed8;
+}
+
+}
+
+#listaTecnologias {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 0;
+    list-style: none;
+}
+
+#listaTecnologias li {
+    background-color: #2563eb;
+    color: white;
+    padding: 10px 18px;
+    border-radius: 20px;
+    font-weight: bold;
+}
+
+#listaProyectos {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+#listaProyectos article {
+    background-color: #f8fafc;
+    padding: 20px;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+}
+
+#listaProyectos h3 {
+    margin-top: 0;
+    color: #2563eb;
+}
+
+#listaProyectos article:hover {
+    transform: translateY(-3px);
+}
+
+#listaProyectos a {
+    display: inline-block;
+    margin-top: 10px;
+    background-color: #2563eb;
+    color: white;
+    padding: 10px 16px;
+    border-radius: 6px;
+    text-decoration: none;
+}
+
+#listaProyectos a:hover {
+    background-color: #1d4ed8;
+}
+
+@media (max-width: 600px) {
+
+    #listaProyectos {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+
+
