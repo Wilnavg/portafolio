@@ -151,5 +151,38 @@ footer {
 
 }
 
+#formularioContacto {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#formularioContacto input,
+#formularioContacto textarea {
+    padding: 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 16px;
+}
+
+#formularioContacto textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+#formularioContacto button {
+    background-color: #2563eb;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#formularioContacto button:hover {
+    background-color: #1d4ed8;
+}
+
 
 

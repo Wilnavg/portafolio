@@ -100,3 +100,25 @@ for (let i = 0; i < proyectos.length; i++) {
     listaProyectos.appendChild(proyecto);
 }
 
+const formulario = document.getElementById("formularioContacto");
+
+formulario.addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    const nombre = document.getElementById("nombre").value;
+    const email = document.getElementById("email").value;
+    const mensaje = document.getElementById("mensajeContacto").value;
+    const resultado = document.getElementById("resultadoFormulario");
+
+    if (nombre === "" || email === "" || mensaje === "") {
+    resultado.textContent = "Por favor, completa todos los campos.";
+    } else {
+    resultado.textContent = "¡Mensaje enviado correctamente!";
+    formulario.reset();
+    }
+});
+
+
+
+
+
