@@ -184,5 +184,18 @@ footer {
     background-color: #1d4ed8;
 }
 
+#resultadoFormulario {
+    margin-top: 15px;
+    font-weight: bold;
+}
+
+.error {
+    color: #dc2626;
+}
+
+.exito {
+    color: #16a34a;
+}
+
 
 

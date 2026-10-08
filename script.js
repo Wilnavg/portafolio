@@ -110,13 +110,25 @@ formulario.addEventListener("submit", function(event) {
     const mensaje = document.getElementById("mensajeContacto").value;
     const resultado = document.getElementById("resultadoFormulario");
 
-    if (nombre === "" || email === "" || mensaje === "") {
-    resultado.textContent = "Por favor, completa todos los campos.";
+    if (nombre.trim() === "" || email.trim() === "" || mensaje.trim() === "") {
+        resultado.textContent = "Por favor, completa todos los campos.";
+        resultado.className = "error";
+    } else if (!email.includes("@") || !email.includes(".")) {
+        resultado.textContent = "Por favor, escribe un email válido.";
+        resultado.className = "error";
     } else {
-    resultado.textContent = "¡Mensaje enviado correctamente!";
-    formulario.reset();
+        resultado.textContent = "¡Mensaje enviado correctamente!";
+        resultado.className = "exito";
+        formulario.reset();
     }
 });
+
+
+
+    
+
+
+
 
 
 
