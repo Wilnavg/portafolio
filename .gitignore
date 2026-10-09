@@ -1,0 +1,13 @@
+
+# Dependencias de Node.js
+node_modules/
+
+# Base de datos local con mensajes personales
+portfolio.db
+*.db
+
+# Archivos locales y temporales
+.env
+.env.*
+!.env.example
+
