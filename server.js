@@ -1,5 +1,25 @@
 
 const express = require("express");
+require("dotenv").config();
+function verificarClaveAdmin(req, res, next) {
+    const clave = req.headers["x-admin-key"];
+
+    if (!process.env.ADMIN_API_KEY) {
+        return res.status(500).json({
+            error: "La clave de administrador no está configurada."
+        });
+    }
+
+    if (clave !== process.env.ADMIN_API_KEY) {
+        return res.status(401).json({
+            error: "Clave de administrador incorrecta o ausente."
+        });
+    }
+
+    next();
+}
+
+
 const cors = require("cors");
 const db = require("./database");
 
@@ -91,8 +111,7 @@ app.post("/api/contacto", function(req, res) {
     }
 });
 
-
-app.get("/api/contactos", function(req, res) {
+app.get("/api/contactos", verificarClaveAdmin, function(req, res) {
     try {
         const contactos = db.prepare(`
             SELECT id, nombre, email, mensaje, fecha
@@ -109,6 +128,97 @@ app.get("/api/contactos", function(req, res) {
         });
     }
 });
+
+
+
+
+app.put("/api/contactos/:id", verificarClaveAdmin, function(req, res) {    const id = Number(req.params.id);
+    const { nombre, email, mensaje } = req.body;
+
+    if (
+        !Number.isInteger(id) ||
+        id <= 0 ||
+        typeof nombre !== "string" ||
+        typeof email !== "string" ||
+        typeof mensaje !== "string" ||
+        !nombre.trim() ||
+        !email.trim() ||
+        !mensaje.trim()
+    ) {
+        return res.status(400).json({
+            error: "El ID y todos los campos son obligatorios y deben ser válidos."
+        });
+    }
+
+    try {
+        const actualizarContacto = db.prepare(`
+            UPDATE contactos
+            SET nombre = ?, email = ?, mensaje = ?
+            WHERE id = ?
+        `);
+
+        const resultado = actualizarContacto.run(
+            nombre.trim(),
+            email.trim(),
+            mensaje.trim(),
+            id
+        );
+
+        if (resultado.changes === 0) {
+            return res.status(404).json({
+                error: "No se encontró un contacto con ese ID."
+            });
+        }
+
+        res.json({
+            mensaje: "Contacto actualizado correctamente.",
+            id: id
+        });
+    } catch (error) {
+        console.error("Error al actualizar el contacto:", error);
+
+        res.status(500).json({
+            error: "No se pudo actualizar el contacto."
+        });
+    }
+});
+
+
+app.delete("/api/contactos/:id", verificarClaveAdmin, function(req, res) {
+    const id = Number(req.params.id);
+
+    if (!Number.isInteger(id) || id <= 0) {
+        return res.status(400).json({
+            error: "El ID debe ser un número entero positivo."
+        });
+    }
+
+    try {
+        const eliminarContacto = db.prepare(
+            "DELETE FROM contactos WHERE id = ?"
+        );
+
+        const resultado = eliminarContacto.run(id);
+
+        if (resultado.changes === 0) {
+            return res.status(404).json({
+                error: "No se encontró un contacto con ese ID."
+            });
+        }
+
+        res.json({
+            mensaje: "Contacto eliminado correctamente.",
+            id: id
+        });
+    } catch (error) {
+        console.error("Error al eliminar el contacto:", error);
+
+        res.status(500).json({
+            error: "No se pudo eliminar el contacto."
+        });
+    }
+});
+
 
 app.listen(PORT, function() {
     console.log(`Servidor funcionando en http://localhost:${PORT}`);
