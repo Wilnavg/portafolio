@@ -164,8 +164,6 @@ app.get("/api/contactos", verificarClaveAdmin, function(req, res) {
 });
 
 
-
-
 app.put("/api/contactos/:id", verificarClaveAdmin, function(req, res) {    const id = Number(req.params.id);
     const { nombre, email, mensaje } = req.body;
 
@@ -251,6 +249,15 @@ app.delete("/api/contactos/:id", verificarClaveAdmin, function(req, res) {
             error: "No se pudo eliminar el contacto."
         });
     }
+});
+
+app.use(function(error, req, res, next) {
+    console.error("Error del servidor:", error);
+
+    res.status(500).json({
+        success: false,
+        error: "Ocurrió un error interno del servidor."
+    });
 });
 
 
