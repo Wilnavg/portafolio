@@ -85,6 +85,32 @@ app.post("/api/contacto", function(req, res) {
         });
     }
 
+    const emailValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailValido.test(email.trim())) {
+        return res.status(400).json({
+            error: "El email no tiene un formato válido."
+        });
+    }
+
+    if (nombre.trim().length < 2) {
+    return res.status(400).json({
+        error: "El nombre debe tener al menos 2 caracteres."
+    });
+    }
+
+    if (mensaje.trim().length < 5) {
+    return res.status(400).json({
+        error: "El mensaje debe tener al menos 5 caracteres."
+    });
+    }
+
+    if (mensaje.trim().length > 500) {
+    return res.status(400).json({
+        error: "El mensaje no puede superar los 500 caracteres."
+    });
+    }
+
     try {
         const guardarContacto = db.prepare(`
             INSERT INTO contactos (nombre, email, mensaje)
