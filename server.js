@@ -1,7 +1,16 @@
 
 const express = require("express");
+const rateLimit = require("express-rate-limit");
+const limiteContacto = rateLimit({
+    windowMs: 60 * 1000,
+    max: 5,
+    message: {
+        error: "Demasiadas solicitudes. Intenta nuevamente más tarde."
+    }
+});
 require("dotenv").config();
 function verificarClaveAdmin(req, res, next) {
+
     const clave = req.headers["x-admin-key"];
 
     if (!process.env.ADMIN_API_KEY) {
@@ -68,8 +77,7 @@ app.get("/api/mensaje", function(req, res) {
     });
 });
 
-
-app.post("/api/contacto", function(req, res) {
+app.post("/api/contacto", limiteContacto, function(req, res) {
     const { nombre, email, mensaje } = req.body;
 
     if (
