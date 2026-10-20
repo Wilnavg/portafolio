@@ -191,45 +191,7 @@ fetch("http://localhost:3000/api/mensaje")
     
 const listaContactos = document.getElementById("listaContactos");
 
-fetch("http://localhost:3000/api/contactos")
-    .then(function(respuesta) {
-        if (!respuesta.ok) {
-            throw new Error("No se pudieron obtener los contactos.");
-        }
 
-        return respuesta.json();
-    })
-    .then(function(contactos) {
-        listaContactos.textContent = "";
-
-        if (contactos.length === 0) {
-            listaContactos.textContent = "Todavía no hay mensajes guardados.";
-            return;
-        }
-
-        contactos.forEach(function(contacto) {
-            const tarjeta = document.createElement("article");
-
-            const nombre = document.createElement("h3");
-            nombre.textContent = contacto.nombre;
-
-            const email = document.createElement("p");
-            email.textContent = "Correo: " + contacto.email;
-
-            const mensaje = document.createElement("p");
-            mensaje.textContent = "Mensaje: " + contacto.mensaje;
-
-            const fecha = document.createElement("p");
-            fecha.textContent = "Fecha: " + contacto.fecha;
-
-            tarjeta.append(nombre, email, mensaje, fecha);
-            listaContactos.appendChild(tarjeta);
-        });
-    })
-    .catch(function(error) {
-        console.error("Error al cargar los contactos:", error);
-        listaContactos.textContent = "No se pudieron cargar los mensajes.";
-    });
     
 
 
