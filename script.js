@@ -74,24 +74,43 @@ for (let i = 0; i < tecnologias.length; i++) {
 
 const listaProyectos = document.getElementById("listaProyectos");
 
+listaProyectos.textContent = "Cargando proyectos...";
 fetch("http://localhost:3000/api/proyectos")
     .then(function(respuesta) {
-    return respuesta.json();
+        if (!respuesta.ok) {
+            throw new Error("Error al obtener los proyectos.");
+        }
+
+        return respuesta.json();
     })
     .then(function(proyectos) {
+        listaProyectos.textContent = "";
         for (let i = 0; i < proyectos.length; i++) {
             const proyecto = document.createElement("article");
+            Element("h3");
+            titulo.textContent = proyectos[i].nombre;
 
+            const descripcion = document.createElement("p");
+            descripcion.textContent = proyectos[i].descripcion;
 
-            proyecto.innerHTML = `
-                <h3>${proyectos[i].nombre}</h3>
-                <p>${proyectos[i].descripcion}</p>
-                <p><strong>Tecnología:</strong> ${proyectos[i].tecnologia}</p>
-                <p><strong>Estado:</strong> ${proyectos[i].estado}</p>
-                <a href="${proyectos[i].enlace}" target="_blank" rel="noopener noreferrer">
-                Ver proyecto en GitHub
-            </a>
-        `;
+            const tecnologia = document.createElement("p");
+            tecnologia.textContent = "Tecnología: " + proyectos[i].tecnologia;
+
+            const estado = document.createElement("p");
+            estado.textContent = "Estado: " + proyectos[i].estado;
+
+            const enlace = document.createElement("a");
+            enlace.textContent = "Ver proyecto en GitHub";
+            enlace.href = proyectos[i].enlace;
+            enlace.target = "_blank";
+            enlace.rel = "noopener noreferrer";
+
+            proyecto.appendChild(titulo);
+            proyecto.appendChild(descripcion);
+            proyecto.appendChild(tecnologia);
+            proyecto.appendChild(estado);
+            proyecto.appendChild(enlace);
+
 
         listaProyectos.appendChild(proyecto);
     }
@@ -101,7 +120,7 @@ fetch("http://localhost:3000/api/proyectos")
     listaProyectos.textContent = "No se pudieron cargar los proyectos.";
 });
 
-    
+
 
 
 const formulario = document.getElementById("formularioContacto");
@@ -113,7 +132,7 @@ formulario.addEventListener("submit", function(event) {
     const nombre = document.getElementById("nombre").value;
     const email = document.getElementById("email").value;
     const mensaje = document.getElementById("mensajeContacto").value;
-    
+
 
     if (nombre.trim() === "" || email.trim() === "" || mensaje.trim() === "") {
         resultado.textContent = "Por favor, completa todos los campos.";
@@ -188,16 +207,16 @@ fetch("http://localhost:3000/api/mensaje")
         console.log("Error al conectar con mi backend:", error);
     });
 
-    
+
 const listaContactos = document.getElementById("listaContactos");
 
 
-    
 
 
 
 
-    
+
+
 
 
 
